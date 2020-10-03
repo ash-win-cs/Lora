@@ -31,7 +31,7 @@
 // i recommend putting this code in a .h file and including it
 // from both the receiver and sender modules
 struct DATA {
-  char names;  
+  String names;  
   String input;
 };
 
@@ -48,15 +48,14 @@ SoftwareSerial ESerial(PIN_RX, PIN_TX);
 EBYTE Transceiver(&ESerial, PIN_M0, PIN_M1, PIN_AX);
 
 void setup() {
-
-
   Serial.begin(9600);
-
   ESerial.begin(9600);
-  Serial.println("Starting Reader");
 
   // this init will set the pinModes for you
   Transceiver.init();
+//  MyData.names = 'CS';
+//  
+//  MyData.names += ':';
 }
 
 void loop() {
@@ -66,17 +65,14 @@ void loop() {
 
 
   if (ESerial.available()) {
-
-    // i highly suggest you send data using structures and not
-    // a parsed data--i've always had a hard time getting reliable data using
-    // a parsing method
-
     Transceiver.GetStruct(&MyData, sizeof(MyData));
 
     // dump out what was just received
-    Serial.print("Message: "); Serial.println(MyData.input);
-//    Serial.print("Bits: "); Serial.println(MyData.Bits);
-//    Serial.print("Volts: "); Serial.println(MyData.Volts);
-
+    Serial.print("RR: "); Serial.println(MyData.input);
   }
+ else if(Serial.available()){
+    MyData.input = Serial.readString();
+    Transceiver.SendStruct(&MyData, sizeof(MyData));
+    Serial.print("ME:"); Serial.println(MyData.input);
+ }
 }
