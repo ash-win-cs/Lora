@@ -2,20 +2,20 @@
 #include "LoRa_E32.h"
 
 // ---------- esp8266 pins --------------
-LoRa_E32 e32ttl100(D2, D3, D5, D7, D6);
+//LoRa_E32 e32ttl(D2, D3, D5, D7, D6);
 //LoRa_E32 e32ttl(D2, D3); // Config without connect AUX and M0 M1
 
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(D2, D3); // RX, TX
-// LoRa_E32 e32ttl(&mySerial, D5, D7, D6);
+SoftwareSerial mySerial(D3, D2);  // e32 TX e32 RX
+LoRa_E32 e32ttl100(&mySerial, D5, D7, D6);
 // -------------------------------------
 
 // ---------- Arduino pins --------------
 //LoRa_E32 e32ttl(2, 3, 5, 7, 6);
-// LoRa_E32 e32ttl(2, 3); // Config without connect AUX and M0 M1
+//LoRa_E32 e32ttl100(2, 3); // Config without connect AUX and M0 M1
 
 //#include <SoftwareSerial.h>
-//SoftwareSerial mySerial(2, 3); // RX, TX
+//SoftwareSerial mySerial(2, 3);  // e32 TX e32 RX
 //LoRa_E32 e32ttl(&mySerial, 5, 7, 6);
 // -------------------------------------
 
@@ -34,7 +34,7 @@ void setup() {
 //	configuration.CHAN = 0x17;
 //	configuration.OPTION.fixedTransmission = FT_TRANSPARENT_TRANSMISSION;
 //	e32ttl100.setConfiguration(configuration, WRITE_CFG_PWR_DWN_SAVE);
-
+//  c.close();
   Serial.println("Hi, I'm going to send message!");
 
   // Send message
